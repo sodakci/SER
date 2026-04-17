@@ -5,7 +5,7 @@ import history.Transaction;
 import lombok.Data;
 
 @Data
-class SEREdge<KeyType, ValueType> {
+class SIEdge<KeyType, ValueType> {
     private final Transaction<KeyType, ValueType> from;
     private final Transaction<KeyType, ValueType> to;
     private final EdgeType type;
