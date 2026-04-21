@@ -1,0 +1,54 @@
+{
+  "profile": "search_32_420_18_10000_0.5_hotspot",
+  "workload": "search",
+  "sessions": 32,
+  "entities": 420,
+  "result_limit": 18,
+  "transactions": 10000,
+  "predicate_ratio": 0.5,
+  "distribution": "hotspot",
+  "replicas": [
+    {
+      "replica": 0,
+      "path": "search_32_420_18_10000_0.5_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 4988,
+        "predicate_transactions": 5012,
+        "predicate_result_tuples": 92659,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 107615
+      }
+    },
+    {
+      "replica": 1,
+      "path": "search_32_420_18_10000_0.5_hotspot\\hist-00001",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 4866,
+        "predicate_transactions": 5134,
+        "predicate_result_tuples": 95070,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 109904
+      }
+    },
+    {
+      "replica": 2,
+      "path": "search_32_420_18_10000_0.5_hotspot\\hist-00002",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 4990,
+        "predicate_transactions": 5010,
+        "predicate_result_tuples": 92644,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 107602
+      }
+    }
+  ]
+}

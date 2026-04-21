@@ -1,0 +1,488 @@
+[
+  {
+    "profile": "inventory_24_180_12_10000_0.28_hotspot",
+    "workload": "inventory",
+    "sessions": 24,
+    "entities": 180,
+    "result_limit": 12,
+    "transactions": 10000,
+    "predicate_ratio": 0.28,
+    "distribution": "hotspot",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "inventory_24_180_12_10000_0.28_hotspot\\hist-00000",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 9182,
+          "predicate_transactions": 2766,
+          "predicate_result_tuples": 20589,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 39747
+        }
+      },
+      {
+        "replica": 1,
+        "path": "inventory_24_180_12_10000_0.28_hotspot\\hist-00001",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 9119,
+          "predicate_transactions": 2826,
+          "predicate_result_tuples": 20882,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 39977
+        }
+      },
+      {
+        "replica": 2,
+        "path": "inventory_24_180_12_10000_0.28_hotspot\\hist-00002",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 9154,
+          "predicate_transactions": 2833,
+          "predicate_result_tuples": 20881,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 40011
+        }
+      }
+    ]
+  },
+  {
+    "profile": "inventory_28_220_14_10000_0.35_zipf",
+    "workload": "inventory",
+    "sessions": 28,
+    "entities": 220,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.35,
+    "distribution": "zipf",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "inventory_28_220_14_10000_0.35_zipf\\hist-00000",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8937,
+          "predicate_transactions": 3528,
+          "predicate_result_tuples": 31994,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 50903
+        }
+      },
+      {
+        "replica": 1,
+        "path": "inventory_28_220_14_10000_0.35_zipf\\hist-00001",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8996,
+          "predicate_transactions": 3457,
+          "predicate_result_tuples": 31210,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 50178
+        }
+      },
+      {
+        "replica": 2,
+        "path": "inventory_28_220_14_10000_0.35_zipf\\hist-00002",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8926,
+          "predicate_transactions": 3589,
+          "predicate_result_tuples": 32357,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 51255
+        }
+      }
+    ]
+  },
+  {
+    "profile": "inventory_32_260_16_10000_0.42_hotspot",
+    "workload": "inventory",
+    "sessions": 32,
+    "entities": 260,
+    "result_limit": 16,
+    "transactions": 10000,
+    "predicate_ratio": 0.42,
+    "distribution": "hotspot",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "inventory_32_260_16_10000_0.42_hotspot\\hist-00000",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8725,
+          "predicate_transactions": 4197,
+          "predicate_result_tuples": 43634,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 62327
+        }
+      },
+      {
+        "replica": 1,
+        "path": "inventory_32_260_16_10000_0.42_hotspot\\hist-00001",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8747,
+          "predicate_transactions": 4196,
+          "predicate_result_tuples": 43282,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 61997
+        }
+      },
+      {
+        "replica": 2,
+        "path": "inventory_32_260_16_10000_0.42_hotspot\\hist-00002",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 8744,
+          "predicate_transactions": 4187,
+          "predicate_result_tuples": 43155,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 61867
+        }
+      }
+    ]
+  },
+  {
+    "profile": "order_24_240_10_10000_0.3_uniform",
+    "workload": "order",
+    "sessions": 24,
+    "entities": 240,
+    "result_limit": 10,
+    "transactions": 10000,
+    "predicate_ratio": 0.3,
+    "distribution": "uniform",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "order_24_240_10_10000_0.3_uniform\\hist-00000",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 7013,
+          "predicate_transactions": 2987,
+          "predicate_result_tuples": 25182,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 42171
+        }
+      },
+      {
+        "replica": 1,
+        "path": "order_24_240_10_10000_0.3_uniform\\hist-00001",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 7040,
+          "predicate_transactions": 2960,
+          "predicate_result_tuples": 25072,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 42088
+        }
+      },
+      {
+        "replica": 2,
+        "path": "order_24_240_10_10000_0.3_uniform\\hist-00002",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6880,
+          "predicate_transactions": 3120,
+          "predicate_result_tuples": 26321,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 43177
+        }
+      }
+    ]
+  },
+  {
+    "profile": "order_28_280_12_10000_0.38_hotspot",
+    "workload": "order",
+    "sessions": 28,
+    "entities": 280,
+    "result_limit": 12,
+    "transactions": 10000,
+    "predicate_ratio": 0.38,
+    "distribution": "hotspot",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "order_28_280_12_10000_0.38_hotspot\\hist-00000",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6255,
+          "predicate_transactions": 3745,
+          "predicate_result_tuples": 38848,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 55075
+        }
+      },
+      {
+        "replica": 1,
+        "path": "order_28_280_12_10000_0.38_hotspot\\hist-00001",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6169,
+          "predicate_transactions": 3831,
+          "predicate_result_tuples": 39778,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 55919
+        }
+      },
+      {
+        "replica": 2,
+        "path": "order_28_280_12_10000_0.38_hotspot\\hist-00002",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6230,
+          "predicate_transactions": 3770,
+          "predicate_result_tuples": 39262,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 55464
+        }
+      }
+    ]
+  },
+  {
+    "profile": "order_32_320_14_10000_0.45_zipf",
+    "workload": "order",
+    "sessions": 32,
+    "entities": 320,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.45,
+    "distribution": "zipf",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "order_32_320_14_10000_0.45_zipf\\hist-00000",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 5577,
+          "predicate_transactions": 4423,
+          "predicate_result_tuples": 54611,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 70156
+        }
+      },
+      {
+        "replica": 1,
+        "path": "order_32_320_14_10000_0.45_zipf\\hist-00001",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 5585,
+          "predicate_transactions": 4415,
+          "predicate_result_tuples": 54699,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 70252
+        }
+      },
+      {
+        "replica": 2,
+        "path": "order_32_320_14_10000_0.45_zipf\\hist-00002",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 5555,
+          "predicate_transactions": 4445,
+          "predicate_result_tuples": 55326,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 70849
+        }
+      }
+    ]
+  },
+  {
+    "profile": "search_24_300_14_10000_0.33_uniform",
+    "workload": "search",
+    "sessions": 24,
+    "entities": 300,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.33,
+    "distribution": "uniform",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "search_24_300_14_10000_0.33_uniform\\hist-00000",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6679,
+          "predicate_transactions": 3321,
+          "predicate_result_tuples": 47905,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 64560
+        }
+      },
+      {
+        "replica": 1,
+        "path": "search_24_300_14_10000_0.33_uniform\\hist-00001",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6648,
+          "predicate_transactions": 3352,
+          "predicate_result_tuples": 48521,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 65145
+        }
+      },
+      {
+        "replica": 2,
+        "path": "search_24_300_14_10000_0.33_uniform\\hist-00002",
+        "counts": {
+          "sessions": 24,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6739,
+          "predicate_transactions": 3261,
+          "predicate_result_tuples": 47349,
+          "approx_session_order_edges": 9976,
+          "approx_input_dependency_edges": 64064
+        }
+      }
+    ]
+  },
+  {
+    "profile": "search_28_360_16_10000_0.4_zipf",
+    "workload": "search",
+    "sessions": 28,
+    "entities": 360,
+    "result_limit": 16,
+    "transactions": 10000,
+    "predicate_ratio": 0.4,
+    "distribution": "zipf",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "search_28_360_16_10000_0.4_zipf\\hist-00000",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6045,
+          "predicate_transactions": 3955,
+          "predicate_result_tuples": 65156,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 81173
+        }
+      },
+      {
+        "replica": 1,
+        "path": "search_28_360_16_10000_0.4_zipf\\hist-00001",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 5942,
+          "predicate_transactions": 4058,
+          "predicate_result_tuples": 66740,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 82654
+        }
+      },
+      {
+        "replica": 2,
+        "path": "search_28_360_16_10000_0.4_zipf\\hist-00002",
+        "counts": {
+          "sessions": 28,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 6019,
+          "predicate_transactions": 3981,
+          "predicate_result_tuples": 65611,
+          "approx_session_order_edges": 9972,
+          "approx_input_dependency_edges": 81602
+        }
+      }
+    ]
+  },
+  {
+    "profile": "search_32_420_18_10000_0.5_hotspot",
+    "workload": "search",
+    "sessions": 32,
+    "entities": 420,
+    "result_limit": 18,
+    "transactions": 10000,
+    "predicate_ratio": 0.5,
+    "distribution": "hotspot",
+    "replicas": [
+      {
+        "replica": 0,
+        "path": "search_32_420_18_10000_0.5_hotspot\\hist-00000",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 4988,
+          "predicate_transactions": 5012,
+          "predicate_result_tuples": 92659,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 107615
+        }
+      },
+      {
+        "replica": 1,
+        "path": "search_32_420_18_10000_0.5_hotspot\\hist-00001",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 4866,
+          "predicate_transactions": 5134,
+          "predicate_result_tuples": 95070,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 109904
+        }
+      },
+      {
+        "replica": 2,
+        "path": "search_32_420_18_10000_0.5_hotspot\\hist-00002",
+        "counts": {
+          "sessions": 32,
+          "transactions": 10000,
+          "writes": 20000,
+          "point_reads": 4990,
+          "predicate_transactions": 5010,
+          "predicate_result_tuples": 92644,
+          "approx_session_order_edges": 9968,
+          "approx_input_dependency_edges": 107602
+        }
+      }
+    ]
+  }
+]

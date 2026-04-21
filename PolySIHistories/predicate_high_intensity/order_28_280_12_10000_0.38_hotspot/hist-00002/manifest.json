@@ -1,0 +1,30 @@
+{
+  "workload": "order",
+  "profile": {
+    "folder_name": "order_28_280_12_10000_0.38_hotspot",
+    "sessions": 28,
+    "entities": 280,
+    "result_limit": 12,
+    "transactions": 10000,
+    "predicate_ratio": 0.38,
+    "distribution": "hotspot"
+  },
+  "replica_index": 2,
+  "seed": 20234,
+  "counts": {
+    "sessions": 28,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 6230,
+    "predicate_transactions": 3770,
+    "predicate_result_tuples": 39262,
+    "approx_session_order_edges": 9972,
+    "approx_input_dependency_edges": 55464
+  },
+  "transaction_kinds": {
+    "order.payment_update": 3136,
+    "order.routing": 3094,
+    "order.dispatch_predicate": 1877,
+    "order.risk_review_predicate": 1893
+  }
+}

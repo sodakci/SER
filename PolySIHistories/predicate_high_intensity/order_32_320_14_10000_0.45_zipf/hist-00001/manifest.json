@@ -1,0 +1,30 @@
+{
+  "workload": "order",
+  "profile": {
+    "folder_name": "order_32_320_14_10000_0.45_zipf",
+    "sessions": 32,
+    "entities": 320,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.45,
+    "distribution": "zipf"
+  },
+  "replica_index": 1,
+  "seed": 20317,
+  "counts": {
+    "sessions": 32,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 5585,
+    "predicate_transactions": 4415,
+    "predicate_result_tuples": 54699,
+    "approx_session_order_edges": 9968,
+    "approx_input_dependency_edges": 70252
+  },
+  "transaction_kinds": {
+    "order.dispatch_predicate": 2258,
+    "order.routing": 2840,
+    "order.risk_review_predicate": 2157,
+    "order.payment_update": 2745
+  }
+}

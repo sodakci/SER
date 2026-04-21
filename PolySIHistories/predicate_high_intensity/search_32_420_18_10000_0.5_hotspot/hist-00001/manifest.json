@@ -1,0 +1,29 @@
+{
+  "workload": "search",
+  "profile": {
+    "folder_name": "search_32_420_18_10000_0.5_hotspot",
+    "sessions": 32,
+    "entities": 420,
+    "result_limit": 18,
+    "transactions": 10000,
+    "predicate_ratio": 0.5,
+    "distribution": "hotspot"
+  },
+  "replica_index": 1,
+  "seed": 30317,
+  "counts": {
+    "sessions": 32,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 4866,
+    "predicate_transactions": 5134,
+    "predicate_result_tuples": 95070,
+    "approx_session_order_edges": 9968,
+    "approx_input_dependency_edges": 109904
+  },
+  "transaction_kinds": {
+    "search.rank_predicate": 5134,
+    "search.visibility_refresh": 2169,
+    "search.score_update": 2697
+  }
+}

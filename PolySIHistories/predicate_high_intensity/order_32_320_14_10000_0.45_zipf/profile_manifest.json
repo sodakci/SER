@@ -1,0 +1,54 @@
+{
+  "profile": "order_32_320_14_10000_0.45_zipf",
+  "workload": "order",
+  "sessions": 32,
+  "entities": 320,
+  "result_limit": 14,
+  "transactions": 10000,
+  "predicate_ratio": 0.45,
+  "distribution": "zipf",
+  "replicas": [
+    {
+      "replica": 0,
+      "path": "order_32_320_14_10000_0.45_zipf\\hist-00000",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 5577,
+        "predicate_transactions": 4423,
+        "predicate_result_tuples": 54611,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 70156
+      }
+    },
+    {
+      "replica": 1,
+      "path": "order_32_320_14_10000_0.45_zipf\\hist-00001",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 5585,
+        "predicate_transactions": 4415,
+        "predicate_result_tuples": 54699,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 70252
+      }
+    },
+    {
+      "replica": 2,
+      "path": "order_32_320_14_10000_0.45_zipf\\hist-00002",
+      "counts": {
+        "sessions": 32,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 5555,
+        "predicate_transactions": 4445,
+        "predicate_result_tuples": 55326,
+        "approx_session_order_edges": 9968,
+        "approx_input_dependency_edges": 70849
+      }
+    }
+  ]
+}

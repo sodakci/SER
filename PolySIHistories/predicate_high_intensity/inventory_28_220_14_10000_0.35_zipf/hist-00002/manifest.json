@@ -1,0 +1,30 @@
+{
+  "workload": "inventory",
+  "profile": {
+    "folder_name": "inventory_28_220_14_10000_0.35_zipf",
+    "sessions": 28,
+    "entities": 220,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.35,
+    "distribution": "zipf"
+  },
+  "replica_index": 2,
+  "seed": 10234,
+  "counts": {
+    "sessions": 28,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 8926,
+    "predicate_transactions": 3589,
+    "predicate_result_tuples": 32357,
+    "approx_session_order_edges": 9972,
+    "approx_input_dependency_edges": 51255
+  },
+  "transaction_kinds": {
+    "inventory.reserve_predicate": 2515,
+    "inventory.ship": 3207,
+    "inventory.adjust": 3204,
+    "inventory.replenish_predicate": 1074
+  }
+}

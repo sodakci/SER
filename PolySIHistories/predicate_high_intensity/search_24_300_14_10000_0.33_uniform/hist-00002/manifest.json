@@ -1,0 +1,29 @@
+{
+  "workload": "search",
+  "profile": {
+    "folder_name": "search_24_300_14_10000_0.33_uniform",
+    "sessions": 24,
+    "entities": 300,
+    "result_limit": 14,
+    "transactions": 10000,
+    "predicate_ratio": 0.33,
+    "distribution": "uniform"
+  },
+  "replica_index": 2,
+  "seed": 30134,
+  "counts": {
+    "sessions": 24,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 6739,
+    "predicate_transactions": 3261,
+    "predicate_result_tuples": 47349,
+    "approx_session_order_edges": 9976,
+    "approx_input_dependency_edges": 64064
+  },
+  "transaction_kinds": {
+    "search.rank_predicate": 3261,
+    "search.visibility_refresh": 3054,
+    "search.score_update": 3685
+  }
+}

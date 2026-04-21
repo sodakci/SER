@@ -14,6 +14,7 @@ import history.Transaction;
 import history.loaders.CobraHistoryLoader;
 import history.loaders.DBCopHistoryLoader;
 import history.loaders.ElleHistoryLoader;
+import history.loaders.PredicateHistoryLoader;
 import history.loaders.TextHistoryLoader;
 import history.transformers.Identity;
 import history.transformers.SnapshotIsolationToSerializable;
@@ -241,6 +242,8 @@ class Utils {
             return new TextHistoryLoader(path);
         case ELLE:
             return new ElleHistoryLoader(path);
+        case PRHIST:
+            return new PredicateHistoryLoader(path);
         default:
             throw new UnimplementedError();
         }
@@ -272,7 +275,7 @@ class Utils {
 }
 
 enum HistoryType {
-    COBRA, DBCOP, TEXT, ELLE
+    COBRA, DBCOP, TEXT, ELLE, PRHIST
 }
 
 enum HistoryTransformation {

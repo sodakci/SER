@@ -1,0 +1,54 @@
+{
+  "profile": "order_24_240_10_10000_0.3_uniform",
+  "workload": "order",
+  "sessions": 24,
+  "entities": 240,
+  "result_limit": 10,
+  "transactions": 10000,
+  "predicate_ratio": 0.3,
+  "distribution": "uniform",
+  "replicas": [
+    {
+      "replica": 0,
+      "path": "order_24_240_10_10000_0.3_uniform\\hist-00000",
+      "counts": {
+        "sessions": 24,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 7013,
+        "predicate_transactions": 2987,
+        "predicate_result_tuples": 25182,
+        "approx_session_order_edges": 9976,
+        "approx_input_dependency_edges": 42171
+      }
+    },
+    {
+      "replica": 1,
+      "path": "order_24_240_10_10000_0.3_uniform\\hist-00001",
+      "counts": {
+        "sessions": 24,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 7040,
+        "predicate_transactions": 2960,
+        "predicate_result_tuples": 25072,
+        "approx_session_order_edges": 9976,
+        "approx_input_dependency_edges": 42088
+      }
+    },
+    {
+      "replica": 2,
+      "path": "order_24_240_10_10000_0.3_uniform\\hist-00002",
+      "counts": {
+        "sessions": 24,
+        "transactions": 10000,
+        "writes": 20000,
+        "point_reads": 6880,
+        "predicate_transactions": 3120,
+        "predicate_result_tuples": 26321,
+        "approx_session_order_edges": 9976,
+        "approx_input_dependency_edges": 43177
+      }
+    }
+  ]
+}

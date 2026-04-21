@@ -1,0 +1,30 @@
+{
+  "workload": "inventory",
+  "profile": {
+    "folder_name": "inventory_32_260_16_10000_0.42_hotspot",
+    "sessions": 32,
+    "entities": 260,
+    "result_limit": 16,
+    "transactions": 10000,
+    "predicate_ratio": 0.42,
+    "distribution": "hotspot"
+  },
+  "replica_index": 1,
+  "seed": 10317,
+  "counts": {
+    "sessions": 32,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 8747,
+    "predicate_transactions": 4196,
+    "predicate_result_tuples": 43282,
+    "approx_session_order_edges": 9968,
+    "approx_input_dependency_edges": 61997
+  },
+  "transaction_kinds": {
+    "inventory.reserve_predicate": 2943,
+    "inventory.replenish_predicate": 1253,
+    "inventory.ship": 2874,
+    "inventory.adjust": 2930
+  }
+}
