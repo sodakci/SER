@@ -1,0 +1,15 @@
+{
+  "profile": "inventory_static_predicate_8_60_60_100_0.55_hotspot",
+  "group": "ACCEPT",
+  "path": "ACCEPT\\inventory_static_predicate_8_60_60_100_0.55_hotspot\\hist-00000",
+  "counts": {
+    "sessions": 8,
+    "transactions": 100,
+    "writes": 200,
+    "point_reads": 139,
+    "predicate_transactions": 46,
+    "predicate_result_tuples": 1173,
+    "approx_session_order_edges": 92,
+    "approx_input_dependency_edges": 1404
+  }
+}

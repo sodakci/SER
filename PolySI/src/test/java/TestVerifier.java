@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.jupiter.api.Test;
-import verifier.SIVerifier;
+import verifier.SERVerifier;
 
 import java.util.*;
 import java.util.function.Function;
@@ -28,7 +28,7 @@ public class TestVerifier {
 							  Triple.of(READ, "x", 1)))
 		));
 
-		var s = new SIVerifier<>(h);
+		var s = new SERVerifier<>(h);
 		assertFalse(s.audit());
 	}
 
@@ -43,7 +43,7 @@ public class TestVerifier {
 				2, List.of(Triple.of(READ, "x", 1),
 					Triple.of(READ, "x", 2)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class TestVerifier {
 				2, List.of(Triple.of(READ, "x", 1),
 					Triple.of(READ, "y", 1)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class TestVerifier {
 				2, List.of(Triple.of(READ, "x", 1),
 					Triple.of(READ, "y", 2)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class TestVerifier {
 				3, List.of(Triple.of(READ, "x", 1),
 					Triple.of(READ, "y", 1)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class TestVerifier {
 				4, List.of(Triple.of(READ, "y", 2),
 					Triple.of(READ, "x", 1)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class TestVerifier {
 				2, List.of(Triple.of(READ, "x", 1),
 					Triple.of(WRITE, "x", 3)))));
 
-		assertFalse(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class TestVerifier {
 					Triple.of(READ, "y", 1),
 					Triple.of(WRITE, "y", 2)))));
 
-		assertTrue(new SIVerifier<>(h).audit());
+		assertFalse(new SERVerifier<>(h).audit());
 	}
 
     @Test
@@ -173,7 +173,7 @@ public class TestVerifier {
                                Triple.of(WRITE, "x", 1),
                                Triple.of(WRITE, "z", 2))));
 
-        assertFalse(new SIVerifier<>(h).audit());
+        assertFalse(new SERVerifier<>(h).audit());
     }
 
     @Test
@@ -204,7 +204,7 @@ public class TestVerifier {
             )
         );
 
-        assertTrue(new SIVerifier<>(h).audit());
+        assertFalse(new SERVerifier<>(h).audit());
     }
 
     @Test
@@ -219,7 +219,7 @@ public class TestVerifier {
             ))
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 
     @Test
@@ -235,7 +235,7 @@ public class TestVerifier {
             ))
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 
     @Test
@@ -251,7 +251,7 @@ public class TestVerifier {
             ))
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class TestVerifier {
             ))
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 
     @Test
@@ -298,7 +298,7 @@ public class TestVerifier {
             )
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 
     @Test
@@ -320,6 +320,6 @@ public class TestVerifier {
             )
         );
 
-        assertFalse(new SIVerifier<>(loader).audit());
+        assertFalse(new SERVerifier<>(loader).audit());
     }
 }

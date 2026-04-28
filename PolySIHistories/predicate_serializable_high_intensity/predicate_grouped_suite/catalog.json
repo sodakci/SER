@@ -1,0 +1,96 @@
+{
+  "accept": [
+    {
+      "profile": "inventory_static_predicate_8_60_60_100_0.55_hotspot",
+      "group": "ACCEPT",
+      "path": "ACCEPT\\inventory_static_predicate_8_60_60_100_0.55_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 8,
+        "transactions": 100,
+        "writes": 200,
+        "point_reads": 139,
+        "predicate_transactions": 46,
+        "predicate_result_tuples": 1173,
+        "approx_session_order_edges": 92,
+        "approx_input_dependency_edges": 1404
+      }
+    },
+    {
+      "profile": "inventory_static_predicate_10_80_80_120_0.58_hotspot",
+      "group": "ACCEPT",
+      "path": "ACCEPT\\inventory_static_predicate_10_80_80_120_0.58_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 10,
+        "transactions": 120,
+        "writes": 240,
+        "point_reads": 163,
+        "predicate_transactions": 67,
+        "predicate_result_tuples": 2028,
+        "approx_session_order_edges": 110,
+        "approx_input_dependency_edges": 2301
+      }
+    },
+    {
+      "profile": "inventory_static_predicate_12_100_100_160_0.6_hotspot",
+      "group": "ACCEPT",
+      "path": "ACCEPT\\inventory_static_predicate_12_100_100_160_0.6_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 12,
+        "transactions": 160,
+        "writes": 320,
+        "point_reads": 230,
+        "predicate_transactions": 101,
+        "predicate_result_tuples": 3965,
+        "approx_session_order_edges": 148,
+        "approx_input_dependency_edges": 4343
+      }
+    }
+  ],
+  "reject": [
+    {
+      "profile": "inventory_write_skew_predicate_8_60_100_0.45_hotspot",
+      "group": "REJECT",
+      "path": "REJECT\\inventory_write_skew_predicate_8_60_100_0.45_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 8,
+        "transactions": 100,
+        "writes": 200,
+        "point_reads": 200,
+        "predicate_transactions": 47,
+        "predicate_result_tuples": 1439,
+        "approx_session_order_edges": 92,
+        "approx_input_dependency_edges": 1731
+      }
+    },
+    {
+      "profile": "inventory_write_skew_predicate_10_80_120_0.5_hotspot",
+      "group": "REJECT",
+      "path": "REJECT\\inventory_write_skew_predicate_10_80_120_0.5_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 10,
+        "transactions": 120,
+        "writes": 240,
+        "point_reads": 240,
+        "predicate_transactions": 67,
+        "predicate_result_tuples": 2856,
+        "approx_session_order_edges": 110,
+        "approx_input_dependency_edges": 3206
+      }
+    },
+    {
+      "profile": "inventory_write_skew_predicate_12_100_160_0.55_hotspot",
+      "group": "REJECT",
+      "path": "REJECT\\inventory_write_skew_predicate_12_100_160_0.55_hotspot\\hist-00000",
+      "counts": {
+        "sessions": 12,
+        "transactions": 160,
+        "writes": 320,
+        "point_reads": 320,
+        "predicate_transactions": 90,
+        "predicate_result_tuples": 4628,
+        "approx_session_order_edges": 148,
+        "approx_input_dependency_edges": 5096
+      }
+    }
+  ]
+}

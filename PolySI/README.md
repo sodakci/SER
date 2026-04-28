@@ -84,6 +84,11 @@ There are four kinds of histories PolySI can accept:
     $ PolySI/tools/audit-prhist.sh PolySIHistories/predicate_high_intensity
     ```
 
+    Predicate reads are checked in the AR SAT encoding by default. The legacy
+    PR_WR/PR_RW edge derivation is skipped on the main path; use
+    `--compare-legacy-predicate-edges` only when you explicitly want diagnostic
+    counts for the old derived-edge layer.
+
 ### Program Output
 
 Using `PolySIHistories/violations/galera/galera.txt` as an example:
@@ -93,7 +98,7 @@ Using `PolySIHistories/violations/galera/galera.txt` as an example:
 Conflicts:
 Edge: (<(2, 8) -> (1, 3)>,[(RW, 0)])
 Edge: (<(1, 3) -> (2, 8)>,[(RW, 0)])
-Constraint: SIConstraint((1, 3), (2, 8), [((1, 3) -> (2, 8), WW, 0), ((1, 4) -> (2, 8), RW, 0), ((1, 4) -> (2, 8), RW, 0)], [((2, 8) -> (1, 3), WW, 0)], 17)
+Constraint: SERConstraint((1, 3), (2, 8), [((1, 3) -> (2, 8), WW, 0), ((1, 4) -> (2, 8), RW, 0), ((1, 4) -> (2, 8), RW, 0)], [((2, 8) -> (1, 3), WW, 0)], 17)
 Related transactions:
 sessionid: 1, id: 4
 ops:
@@ -102,11 +107,11 @@ READ 0 = 5
 ENTIRE_EXPERIMENT: 146ms
 ONESHOT_CONS: 16ms
 ...
-SI_PRUNE: 20ms
+SER_PRUNE: 20ms
 ...
-SI_SOLVER_GEN: 11ms
+ONESHOT_SOLVE: 11ms
 ...
-SI_SOLVER_SOLVE: 0ms
+ONESHOT_SOLVE: 0ms
 [[[[ REJECT ]]]]
 ```
 
@@ -120,9 +125,8 @@ corresponding to the numbers in figures are:
 |-------------------|-----------------|
 | ENTIRE_EXPERIMENT | total time      |
 | ONESHOT_CONS      | constructing    |
-| SI_PRUNE          | pruning         |
-| SI_SOLVER_GEN     | encoding        |
-| SI_SOLVER_SOLVE   | solving         |
+| SER_PRUNE         | pruning         |
+| ONESHOT_SOLVE     | SAT solving     |
 
 In case of finding a violation, the conflicting transactions are also printed.
 

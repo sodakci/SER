@@ -1,0 +1,16 @@
+{
+  "profile": "inventory_serializable_32_420_420_10000_0.55_hotspot",
+  "expected_verdict": "ACCEPT",
+  "serial_witness": "txn_id_ascending",
+  "history": "inventory_serializable_32_420_420_10000_0.55_hotspot\\hist-00000",
+  "counts": {
+    "sessions": 32,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 8653,
+    "predicate_transactions": 5462,
+    "predicate_result_tuples": 1027684,
+    "approx_session_order_edges": 9968,
+    "approx_input_dependency_edges": 1046305
+  }
+}

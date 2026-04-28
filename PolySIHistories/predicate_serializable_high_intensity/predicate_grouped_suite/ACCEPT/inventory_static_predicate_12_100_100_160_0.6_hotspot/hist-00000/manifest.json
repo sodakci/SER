@@ -1,0 +1,38 @@
+{
+  "workload": "inventory_static_predicate",
+  "expected_verdict": "ACCEPT",
+  "serial_witness": "txn_id_ascending",
+  "profile": {
+    "folder_name": "inventory_static_predicate_12_100_100_160_0.6_hotspot",
+    "sessions": 12,
+    "entities": 100,
+    "result_limit": 100,
+    "transactions": 160,
+    "predicate_ratio": 0.6,
+    "distribution": "hotspot"
+  },
+  "seed": 88916,
+  "counts": {
+    "sessions": 12,
+    "transactions": 160,
+    "writes": 320,
+    "point_reads": 230,
+    "predicate_transactions": 101,
+    "predicate_result_tuples": 3965,
+    "approx_session_order_edges": 148,
+    "approx_input_dependency_edges": 4343
+  },
+  "transaction_kinds": {
+    "inventory.accept_reserve_predicate": 70,
+    "inventory.accept_restock_predicate": 31,
+    "inventory.accept_mutable_adjust": 36,
+    "inventory.accept_mutable_ship": 23
+  },
+  "serializability_notes": [
+    "Transactions are generated in ascending txn id order.",
+    "Predicate domain keys inventory_onhand_* are initialized once and never updated after init.",
+    "Every predicate read returns the complete matching result set for the frozen predicate domain.",
+    "Mutable high-intensity reads/writes target inventory_reserved_*, inventory_restock_*, inventory_demand_*, and shipment_slot_*.",
+    "Session order is consistent with ascending txn id order."
+  ]
+}

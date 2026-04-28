@@ -14,16 +14,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.google.common.collect.Sets;
 import com.google.common.collect.Streams;
 import com.google.common.graph.EndpointPair;
-import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraph;
-import com.google.common.graph.ValueGraphBuilder;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
 import graph.Edge;
 import graph.EdgeType;
 import graph.MatrixGraph;
@@ -31,9 +26,6 @@ import history.Event;
 import history.History;
 import history.Transaction;
 import history.Event.EventType;
-import monosat.Lit;
-import monosat.Logic;
-import monosat.Solver;
 
 class Utils {
     @lombok.Data
@@ -139,8 +131,8 @@ class Utils {
             var key = result.getKey();
             var value = result.getValue();
 
-            if (resultByKey.containsKey(key) && !Objects.equals(resultByKey.get(key), value)) {
-                System.err.printf("%s has multiple values for key %s in predicate result\n", ev, key);
+            if (resultByKey.containsKey(key)) {
+                System.err.printf("%s has duplicate key %s in predicate result\n", ev, key);
                 return false;
             }
             resultByKey.put(key, value);
@@ -218,104 +210,6 @@ class Utils {
         return true;
     }
 
-    /**
-     * Collect unknown edges.
-     * A∘B composition should only use RW edges, NOT PR_RW edges (which are known).
-     *
-     * @param graphA       graph A containing known and unknown edges
-     * @param graphB       graph B containing RW and PR_RW edges
-     * @param reachability known reachable node pairs
-     * @param solver       SAT solver
-     * @param knownPrRwPairs Set of (from,to) pairs that are PR_RW known edges (to exclude from A∘B)
-     */
-    static <KeyType, ValueType> List<Triple<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>, Lit>> getUnknownEdges(
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphA,
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphB,
-            MatrixGraph<Transaction<KeyType, ValueType>> reachability, Solver solver,
-            Set<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>> knownPrRwPairs) {
-        var edges = new ArrayList<Triple<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>, Lit>>();
-
-        for (var p : graphA.nodes()) {
-            for (var n : graphA.successors(p)) {
-                var predEdges = graphA.edgeValue(p, n).get();
-
-                if (p == n || !reachability.hasEdgeConnecting(p, n)) {
-                    predEdges.forEach(e -> edges.add(Triple.of(p, n, e)));
-                }
-
-                // Only use RW edges (NOT PR_RW) for A∘B composition.
-                // PR_RW edges are "known" — they must appear in the final graph.
-                var txns = graphB.successors(n).stream()
-                        .filter(t -> p == t || !reachability.hasEdgeConnecting(p, t))
-                        // Exclude PR_RW known edges from composition
-                        .filter(t -> !knownPrRwPairs.contains(Pair.of(n, t)))
-                        .collect(Collectors.toList());
-
-                for (var s : txns) {
-                    var succEdges = graphB.edgeValue(n, s).get();
-                    predEdges.forEach(e1 -> succEdges.forEach(e2 -> {
-                        var lit = Logic.and(e1, e2);
-                        solver.setDecisionLiteral(lit, false);
-                        edges.add(Triple.of(p, s, lit));
-                    }));
-                }
-            }
-        }
-
-        return edges;
-    }
-
-    /**
-     * Collect unknown edges (backward-compatible overload, no PR_RW exclusion).
-     */
-    static <KeyType, ValueType> List<Triple<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>, Lit>> getUnknownEdges(
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphA,
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphB,
-            MatrixGraph<Transaction<KeyType, ValueType>> reachability, Solver solver) {
-        return getUnknownEdges(graphA, graphB, reachability, solver, Collections.emptySet());
-    }
-
-    /**
-     * Collect known edges in A union C.
-     *
-     * AC = A union (A ∘ B). For each edge n→m in AC:
-     * - If n→m exists directly in graphA, use its literal.
-     * - Otherwise n→m = n→x (from A) ∘ x→m (from B), use A(n→x) AND B(x→m).
-     *
-     * PR_RW edges (from graphB) that are NOT in AC are handled via
-     * the constraint system in addConstraints, not here.
-     *
-     * @param graphA known graph A
-     * @param graphB known graph B
-     * @param AC the graph containing the edges to collect
-     */
-    static <KeyType, ValueType> List<Triple<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>, Lit>> getKnownEdges(
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphA,
-            MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> graphB,
-            MatrixGraph<Transaction<KeyType, ValueType>> AC) {
-        var result = new ArrayList<Triple<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>, Lit>>();
-
-        // 1. AC 中的直达边（来自 graphA 或 A∘B 合成路径）
-        for (var e : AC.edges()) {
-            var n = e.source();
-            var m = e.target();
-            var firstEdge = ((Function<Optional<Collection<Lit>>, Lit>) c -> c.get().iterator().next());
-
-            if (graphA.hasEdgeConnecting(n, m)) {
-                result.add(Triple.of(n, m, firstEdge.apply(graphA.edgeValue(n, m))));
-            } else {
-                var middle = Sets.intersection(graphA.successors(n), graphB.predecessors(m)).iterator().next();
-                result.add(Triple.of(n, m, Logic.and(
-                        firstEdge.apply(graphA.edgeValue(n, middle)),
-                        firstEdge.apply(graphB.edgeValue(middle, m)))));
-            }
-        }
-
-        // PR_RW edges from graphB that are NOT part of the A∘B composition
-        // are handled via the constraint system in addConstraints, not here.
-        return result;
-    }
-
     static <KeyType, ValueType> Map<Transaction<KeyType, ValueType>, Integer> getOrderInSession(
             History<KeyType, ValueType> history) {
         // @formatter:off
@@ -326,23 +220,6 @@ class Utils {
                     Pair::of))
                 .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
         // @formatter:on
-    }
-
-    static <KeyType, ValueType> MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> createEmptyGraph(
-            History<KeyType, ValueType> history) {
-        MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> g = ValueGraphBuilder.directed()
-                .allowsSelfLoops(true).build();
-
-        history.getTransactions().forEach(g::addNode);
-        return g;
-    }
-
-    static <KeyType, ValueType> void addEdge(MutableValueGraph<Transaction<KeyType, ValueType>, Collection<Lit>> g,
-            Transaction<KeyType, ValueType> src, Transaction<KeyType, ValueType> dst, Lit lit) {
-        if (!g.hasEdgeConnecting(src, dst)) {
-            g.putEdgeValue(src, dst, new ArrayList<>());
-        }
-        g.edgeValue(src, dst).get().add(lit);
     }
 
     /*
@@ -379,7 +256,7 @@ class Utils {
 
     static <KeyType, ValueType> String conflictsToDot(Collection<Transaction<KeyType, ValueType>> transactions,
             Collection<Pair<EndpointPair<Transaction<KeyType, ValueType>>, Collection<Edge<KeyType>>>> edges,
-            Collection<SIConstraint<KeyType, ValueType>> constraints) {
+            Collection<SERConstraint<KeyType, ValueType>> constraints) {
         var builder = new StringBuilder();
         builder.append("digraph {\n");
 
@@ -423,7 +300,7 @@ class Utils {
 
     static <KeyType, ValueType> String conflictsToLegacy(Collection<Transaction<KeyType, ValueType>> transactions,
             Collection<Pair<EndpointPair<Transaction<KeyType, ValueType>>, Collection<Edge<KeyType>>>> edges,
-            Collection<SIConstraint<KeyType, ValueType>> constraints) {
+            Collection<SERConstraint<KeyType, ValueType>> constraints) {
         var builder = new StringBuilder();
 
         edges.forEach(p -> builder.append(String.format("Edge: %s\n", p)));

@@ -1,0 +1,15 @@
+{
+  "profile": "inventory_write_skew_predicate_8_60_100_0.45_hotspot",
+  "group": "REJECT",
+  "path": "REJECT\\inventory_write_skew_predicate_8_60_100_0.45_hotspot\\hist-00000",
+  "counts": {
+    "sessions": 8,
+    "transactions": 100,
+    "writes": 200,
+    "point_reads": 200,
+    "predicate_transactions": 47,
+    "predicate_result_tuples": 1439,
+    "approx_session_order_edges": 92,
+    "approx_input_dependency_edges": 1731
+  }
+}

@@ -26,7 +26,7 @@ import picocli.CommandLine.Parameters;
 import util.Profiler;
 import util.UnimplementedError;
 import verifier.Pruning;
-import verifier.SIVerifier;
+import verifier.SERVerifier;
 
 @Command(name = "verifier", mixinStandardHelpOptions = true, version = "verifier 0.0.1", subcommands = { Audit.class,
         Convert.class, Stat.class, Dump.class })
@@ -59,6 +59,9 @@ class Audit implements Callable<Integer> {
     @Option(names = { "--dot-output" }, description = "print conflicts in dot format")
     private final Boolean dotOutput = false;
 
+    @Option(names = { "--compare-legacy-predicate-edges" }, description = "derive legacy PR_* graph edges for diagnostics only")
+    private final Boolean compareLegacyPredicateEdges = false;
+
     @Parameters(description = "history path")
     private Path path;
 
@@ -69,12 +72,13 @@ class Audit implements Callable<Integer> {
         var loader = Utils.getLoader(type, path);
 
         Pruning.setEnablePruning(!noPruning);
-        SIVerifier.setCoalesceConstraints(!noCoalescing);
-        SIVerifier.setDotOutput(dotOutput);
+        SERVerifier.setCoalesceConstraints(!noCoalescing);
+        SERVerifier.setDotOutput(dotOutput);
+        SERVerifier.setCompareLegacyPredicateEdges(compareLegacyPredicateEdges);
 
         profiler.startTick("ENTIRE_EXPERIMENT");
         var pass = true;
-        var verifier = new SIVerifier<>(loader);
+        var verifier = new SERVerifier<>(loader);
         pass = verifier.audit();
         profiler.endTick("ENTIRE_EXPERIMENT");
 

@@ -1,0 +1,33 @@
+{
+  "workload": "inventory_write_skew_predicate",
+  "expected_verdict": "REJECT",
+  "rejection_witness": "repeated_write_skew_rw_cycle",
+  "profile": {
+    "folder_name": "inventory_write_skew_predicate_12_100_160_0.55_hotspot",
+    "sessions": 12,
+    "entities": 100,
+    "transactions": 160,
+    "predicate_ratio": 0.55,
+    "distribution": "hotspot"
+  },
+  "seed": 98103,
+  "counts": {
+    "sessions": 12,
+    "transactions": 160,
+    "writes": 320,
+    "point_reads": 320,
+    "predicate_transactions": 90,
+    "predicate_result_tuples": 4628,
+    "approx_session_order_edges": 148,
+    "approx_input_dependency_edges": 5096
+  },
+  "transaction_kinds": {
+    "reject.write_skew_left": 80,
+    "reject.write_skew_right": 80
+  },
+  "serializability_notes": [
+    "Predicate reads use a frozen domain only to keep PRHIST shape stable.",
+    "Rejection is forced by repeated write-skew motifs on ws_a_* / ws_b_* keys.",
+    "Each motif creates an RW cycle between two committed transactions."
+  ]
+}

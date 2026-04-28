@@ -39,3 +39,4 @@ these verifiers are shown in their own READMEs.
    `${#sessions}_${#txns/session}_${#ops/txn}_${#keys}_${read_probability}_${key_distribution}`.
 
    Running the entire experiment takes a few hours.
+# SER

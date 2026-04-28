@@ -1,0 +1,37 @@
+{
+  "workload": "inventory",
+  "expected_verdict": "ACCEPT",
+  "serial_witness": "txn_id_ascending",
+  "profile": {
+    "folder_name": "inventory_serializable_32_420_420_10000_0.55_hotspot",
+    "sessions": 32,
+    "entities": 420,
+    "result_limit": 420,
+    "transactions": 10000,
+    "predicate_ratio": 0.55,
+    "distribution": "hotspot"
+  },
+  "seed": 74231,
+  "counts": {
+    "sessions": 32,
+    "transactions": 10000,
+    "writes": 20000,
+    "point_reads": 8653,
+    "predicate_transactions": 5462,
+    "predicate_result_tuples": 1027684,
+    "approx_session_order_edges": 9968,
+    "approx_input_dependency_edges": 1046305
+  },
+  "transaction_kinds": {
+    "inventory.serializable_adjust": 2504,
+    "inventory.serializable_reserve_predicate": 4115,
+    "inventory.serializable_ship": 2034,
+    "inventory.serializable_restock_predicate": 1347
+  },
+  "serializability_notes": [
+    "Transactions are generated in ascending txn id order.",
+    "Every point read observes the latest version before the current transaction.",
+    "Every predicate read materializes the complete matching result set before the current transaction writes.",
+    "Session order is consistent with ascending txn id order because txn ids increase within each session bucket."
+  ]
+}

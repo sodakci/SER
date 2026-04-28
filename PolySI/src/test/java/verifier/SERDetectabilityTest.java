@@ -48,13 +48,7 @@ public class SERDetectabilityTest {
     }
 
     private static boolean verifySer(History<String, Integer> h) {
-        SIVerifier.setVerifySer(true);
-        return new SIVerifier<>(() -> h).audit();
-    }
-
-    private static boolean verifySI(History<String, Integer> h) {
-        SIVerifier.setVerifySer(false);
-        return new SIVerifier<>(() -> h).audit();
+        return new SERVerifier<>(() -> h).audit();
     }
 
     // ================================================================
@@ -165,7 +159,7 @@ public class SERDetectabilityTest {
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
         graph.putEdge(h.getTransaction(1L), h.getTransaction(2L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(0L), h.getTransaction(1L)),
@@ -193,7 +187,7 @@ public class SERDetectabilityTest {
         graph.putEdge(h.getTransaction(1L), h.getTransaction(2L), new Edge<>(EdgeType.WW, "x"));
         graph.putEdge(h.getTransaction(2L), h.getTransaction(3L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(2L), h.getTransaction(3L)),
@@ -221,7 +215,7 @@ public class SERDetectabilityTest {
         var graph = new KnownGraph<>(h);
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(0L), h.getTransaction(1L)),
@@ -246,7 +240,7 @@ public class SERDetectabilityTest {
         var graph = new KnownGraph<>(h);
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(0L), h.getTransaction(1L)),
@@ -277,7 +271,7 @@ public class SERDetectabilityTest {
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
         graph.putEdge(h.getTransaction(1L), h.getTransaction(2L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(0L), h.getTransaction(1L)),
@@ -305,7 +299,7 @@ public class SERDetectabilityTest {
         var graph = new KnownGraph<>(h);
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         assertTrue(graph.getKnownGraphA()
                         .hasEdgeConnecting(h.getTransaction(0L), h.getTransaction(1L)),
@@ -343,37 +337,15 @@ public class SERDetectabilityTest {
         assertFalse(verifySer(h), "Write Skew 是 SER 违规，检测器应返回 false");
     }
 
-    /**
-     * 场景15: SI 和 SER 模式一致性
-     */
-    @Test
-    void ser_vsSI_modeDifference() {
-        var h = makeHistory(
-                Set.of(0L),
-                Map.of(0L, List.of(0L, 1L, 2L)),
-                Map.of(0L, List.of(Triple.of(WRITE, "x", 1)),
-                        1L, List.of(Triple.of(READ, "x", 1),
-                                Triple.of(WRITE, "y", 1)),
-                        2L, List.of(Triple.of(READ, "y", 1))),
-                Map.of()
-        );
-
-        boolean serResult = verifySer(h);
-        boolean siResult = verifySI(h);
-
-        assertEquals(serResult, siResult,
-                "对于无 predicate 的历史，SER 和 SI 结果应一致");
-    }
-
     // ================================================================
     // 维度七：内部一致性检查
     // ================================================================
 
     /**
-     * 场景16（修正）: 读非最新写 — 验证程序顺序下的行为
+     * 场景16（修正）: 读非最新写 — 验证当前内部一致性规则下的行为
      * T1: W(x,10); T2: W(x,20); T3: R(x,10)
-     * 在 SI 下，T3 读到的是提交时的快照，此时 T1 和 T2 都已提交，
-     * 所以 T3 应该读到 x=20（最新）。这违反了 SI 的读最新规则。
+     * 在当前内部一致性规则下，T3 读到的是提交时的快照，此时 T1 和 T2 都已提交，
+     * 所以 T3 应该读到 x=20（最新）。这违反了当前读最新规则。
      * 但在某些实现中，如果 T3 在 T2 提交前开始，它可能读到旧值。
      * 实际验证结果：verifyInternalConsistency = true
      * 说明系统接受这种读（可能是因为 T3 在 T2 开始前就快照了）
@@ -413,6 +385,23 @@ public class SERDetectabilityTest {
         // Predicate result x=3 不满足 v>5，内部一致性检查应失败
         assertFalse(verifier.Utils.verifyInternalConsistency(h),
                 "Predicate result x=3 不满足 v>5，内部一致性检查应失败");
+    }
+
+    @Test
+    void internalConsistency_predicateDuplicateSameKeySameValue() {
+        var h = makeHistory(
+                Set.of(0L),
+                Map.of(0L, List.of(0L, 1L)),
+                Map.of(0L, List.of(Triple.of(WRITE, "x", 10))),
+                Map.of(1L, Pair.of(
+                        (Event.PredEval<String, Integer>) (k, v) -> v > 5,
+                        List.of(
+                                new Event.PredResult<>("x", 10),
+                                new Event.PredResult<>("x", 10))))
+        );
+
+        assertFalse(verifier.Utils.verifyInternalConsistency(h),
+                "Predicate result 中同 key 同 value 的重复 tuple 应被预检拒绝");
     }
 
     /**
@@ -464,7 +453,7 @@ public class SERDetectabilityTest {
         // 添加 WW 约束建立 orderedWrites
         graph.putEdge(h.getTransaction(0L), h.getTransaction(1L), new Edge<>(EdgeType.WW, "x"));
 
-        SIVerifier.refreshDerivedPredicateEdges(h, graph);
+        SERVerifier.refreshDerivedPredicateEdges(h, graph);
 
         // PR_WR 应存在: T0 是 flip witness, T1 是 reader
         assertTrue(graph.getKnownGraphA()
