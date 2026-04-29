@@ -1,0 +1,722 @@
+[
+  {
+    "motif": 0,
+    "transactions": [
+      0,
+      1,
+      2
+    ],
+    "keys": [
+      "search_score_cycle_0000_x",
+      "search_score_cycle_0000_y",
+      "search_score_cycle_0000_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 0,
+        "to": 1,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0000_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 1,
+        "to": 2,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0000_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 2,
+        "to": 0,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0000_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 1,
+    "transactions": [
+      3,
+      4,
+      5
+    ],
+    "keys": [
+      "search_score_cycle_0001_x",
+      "search_score_cycle_0001_y",
+      "search_score_cycle_0001_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 3,
+        "to": 4,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0001_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0001_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 5,
+        "to": 3,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0001_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 2,
+    "transactions": [
+      6,
+      7,
+      8
+    ],
+    "keys": [
+      "search_score_cycle_0002_x",
+      "search_score_cycle_0002_y",
+      "search_score_cycle_0002_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 6,
+        "to": 7,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0002_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0002_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 8,
+        "to": 6,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0002_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 3,
+    "transactions": [
+      9,
+      10,
+      11
+    ],
+    "keys": [
+      "search_score_cycle_0003_x",
+      "search_score_cycle_0003_y",
+      "search_score_cycle_0003_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 9,
+        "to": 10,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0003_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0003_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 11,
+        "to": 9,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0003_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 4,
+    "transactions": [
+      12,
+      13,
+      14
+    ],
+    "keys": [
+      "search_score_cycle_0004_x",
+      "search_score_cycle_0004_y",
+      "search_score_cycle_0004_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 12,
+        "to": 13,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0004_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0004_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 14,
+        "to": 12,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0004_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 5,
+    "transactions": [
+      15,
+      16,
+      17
+    ],
+    "keys": [
+      "search_score_cycle_0005_x",
+      "search_score_cycle_0005_y",
+      "search_score_cycle_0005_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 15,
+        "to": 16,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0005_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0005_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 17,
+        "to": 15,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0005_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 6,
+    "transactions": [
+      18,
+      19,
+      20
+    ],
+    "keys": [
+      "search_score_cycle_0006_x",
+      "search_score_cycle_0006_y",
+      "search_score_cycle_0006_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 18,
+        "to": 19,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0006_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0006_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 20,
+        "to": 18,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0006_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 7,
+    "transactions": [
+      21,
+      22,
+      23
+    ],
+    "keys": [
+      "search_score_cycle_0007_x",
+      "search_score_cycle_0007_y",
+      "search_score_cycle_0007_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 21,
+        "to": 22,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0007_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 22,
+        "to": 23,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0007_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 23,
+        "to": 21,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0007_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 8,
+    "transactions": [
+      24,
+      25,
+      26
+    ],
+    "keys": [
+      "search_score_cycle_0008_x",
+      "search_score_cycle_0008_y",
+      "search_score_cycle_0008_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 24,
+        "to": 25,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0008_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 25,
+        "to": 26,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0008_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 26,
+        "to": 24,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0008_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 9,
+    "transactions": [
+      27,
+      28,
+      29
+    ],
+    "keys": [
+      "search_score_cycle_0009_x",
+      "search_score_cycle_0009_y",
+      "search_score_cycle_0009_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 27,
+        "to": 28,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0009_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 28,
+        "to": 29,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0009_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 29,
+        "to": 27,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0009_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 10,
+    "transactions": [
+      30,
+      31,
+      32
+    ],
+    "keys": [
+      "search_score_cycle_0010_x",
+      "search_score_cycle_0010_y",
+      "search_score_cycle_0010_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 30,
+        "to": 31,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0010_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 31,
+        "to": 32,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0010_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 32,
+        "to": 30,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0010_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 11,
+    "transactions": [
+      33,
+      34,
+      35
+    ],
+    "keys": [
+      "search_score_cycle_0011_x",
+      "search_score_cycle_0011_y",
+      "search_score_cycle_0011_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 33,
+        "to": 34,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0011_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 34,
+        "to": 35,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0011_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 35,
+        "to": 33,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0011_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 12,
+    "transactions": [
+      36,
+      37,
+      38
+    ],
+    "keys": [
+      "search_score_cycle_0012_x",
+      "search_score_cycle_0012_y",
+      "search_score_cycle_0012_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 36,
+        "to": 37,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0012_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 37,
+        "to": 38,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0012_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 38,
+        "to": 36,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0012_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 13,
+    "transactions": [
+      39,
+      40,
+      41
+    ],
+    "keys": [
+      "search_score_cycle_0013_x",
+      "search_score_cycle_0013_y",
+      "search_score_cycle_0013_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 39,
+        "to": 40,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0013_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 40,
+        "to": 41,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0013_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 41,
+        "to": 39,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0013_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 14,
+    "transactions": [
+      42,
+      43,
+      44
+    ],
+    "keys": [
+      "search_score_cycle_0014_x",
+      "search_score_cycle_0014_y",
+      "search_score_cycle_0014_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 42,
+        "to": 43,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0014_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 43,
+        "to": 44,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0014_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 44,
+        "to": 42,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0014_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 15,
+    "transactions": [
+      45,
+      46,
+      47
+    ],
+    "keys": [
+      "search_score_cycle_0015_x",
+      "search_score_cycle_0015_y",
+      "search_score_cycle_0015_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 45,
+        "to": 46,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0015_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 46,
+        "to": 47,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0015_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 47,
+        "to": 45,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0015_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 16,
+    "transactions": [
+      48,
+      49,
+      50
+    ],
+    "keys": [
+      "search_score_cycle_0016_x",
+      "search_score_cycle_0016_y",
+      "search_score_cycle_0016_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 48,
+        "to": 49,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0016_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 49,
+        "to": 50,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0016_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 50,
+        "to": 48,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0016_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 17,
+    "transactions": [
+      51,
+      52,
+      53
+    ],
+    "keys": [
+      "search_score_cycle_0017_x",
+      "search_score_cycle_0017_y",
+      "search_score_cycle_0017_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 51,
+        "to": 52,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0017_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 52,
+        "to": 53,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0017_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 53,
+        "to": 51,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0017_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 18,
+    "transactions": [
+      54,
+      55,
+      56
+    ],
+    "keys": [
+      "search_score_cycle_0018_x",
+      "search_score_cycle_0018_y",
+      "search_score_cycle_0018_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 54,
+        "to": 55,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0018_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 55,
+        "to": 56,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0018_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 56,
+        "to": 54,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0018_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  },
+  {
+    "motif": 19,
+    "transactions": [
+      57,
+      58,
+      59
+    ],
+    "keys": [
+      "search_score_cycle_0019_x",
+      "search_score_cycle_0019_y",
+      "search_score_cycle_0019_z"
+    ],
+    "expected_cycle": [
+      {
+        "from": 57,
+        "to": 58,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0019_x",
+        "reason": "T0 observes initial matching x; T1 flips x below the predicate threshold"
+      },
+      {
+        "from": 58,
+        "to": 59,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0019_y",
+        "reason": "T1 observes initial matching y; T2 flips y below the predicate threshold"
+      },
+      {
+        "from": 59,
+        "to": 57,
+        "edge": "PR_RW",
+        "key": "search_score_cycle_0019_z",
+        "reason": "T2 observes initial matching z; T0 flips z below the predicate threshold"
+      }
+    ]
+  }
+]

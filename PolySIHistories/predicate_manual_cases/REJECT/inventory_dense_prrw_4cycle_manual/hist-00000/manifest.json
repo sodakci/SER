@@ -1,0 +1,19 @@
+{
+  "expected_verdict": "REJECT",
+  "workload": "inventory_dense_prrw_4cycle_manual",
+  "counts": {
+    "sessions": 4,
+    "transactions": 14,
+    "writes": 30,
+    "point_reads": 0,
+    "predicate_transactions": 6,
+    "predicate_result_tuples": 18,
+    "approx_session_order_edges": 10,
+    "approx_input_dependency_edges": 28
+  },
+  "notes": [
+    "The rejecting core is transactions 4,5,6,7.",
+    "The same cycle keys reappear in preparer, cycle, cleanup, and observer transactions.",
+    "Each predicate result contains multiple keys from the same region; only the _0000 key is flipped to create the PR_RW edge."
+  ]
+}

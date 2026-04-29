@@ -1,36 +1,24 @@
 # PolySI
 
-This repo contains the software artifact of PolySI, including:
-
-1. The source code of PolySI, which is our implementation of the algorithms
-   described in the paper.
-2. The source code of [Cobra](https://github.com/DBCobra/CobraVerifier).
-3. The source code of [dbcop](https://zenodo.org/record/3370437#.YhjFofXMLlx).
-4. The collected histories used to reproduce the results in the paper.
+This repo contains the predicate-aware SER verifier based on PolySI, together
+with predicate history datasets used for regression and evaluation.
 
 ## Requirements
 
-The artifact was tested on Ubuntu 22.04. The steps to build and run each of
-these verifiers are shown in their own READMEs.
+The verifier was tested on Ubuntu 22.04. Build and usage instructions are in
+`PolySI/README.md`.
 
 ## Reproducing results
 
-1. Build PolySI, Cobra and dbcop
+1. Build PolySI
 
-   Please follow their instructions in respective READMEs.
-
-   Cobra and dbcop are optional. If you don't build one of them, then the
-   results will not be included in the output.
+   Please follow the instructions in `PolySI/README.md`.
 
 2. Modify the paths in `repro/reproduce.sh` to point to the directories of
    histories and verifiers
 
-   The variables that needs to be modified are: `FIG7_HIST`, `FIG8_9_10_HIST`,
-   `COBRA_DIR`, `DBCOP_DIR`, `SI_DIR`. They are shown in the first few lines of
-   the script.
-
-   `COBRA_DIR` and `DBCOP_DIR` should be left empty if the corresponding program
-   is not built.
+   The legacy Cobra/Elle verifier integrations are no longer part of this
+   predicate-focused project.
 
 3. Run `repro/reproduce.sh`
 

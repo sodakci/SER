@@ -1,0 +1,20 @@
+{
+  "expected_verdict": "ACCEPT",
+  "workload": "inventory_dense_serial_manual",
+  "serial_witness": "txn_id_ascending",
+  "counts": {
+    "sessions": 4,
+    "transactions": 12,
+    "writes": 24,
+    "point_reads": 0,
+    "predicate_transactions": 8,
+    "predicate_result_tuples": 20,
+    "approx_session_order_edges": 8,
+    "approx_input_dependency_edges": 28
+  },
+  "notes": [
+    "This history intentionally reuses the same regions across multiple predicate reads.",
+    "Predicate result sets evolve over time in a way that is consistent with ascending txn id order.",
+    "There is no backward predicate-boundary edge, so the history should remain serializable."
+  ]
+}

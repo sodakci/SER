@@ -1,0 +1,43 @@
+[
+  {
+    "cycle_name": "dense_four_region_predicate_cycle",
+    "transactions": [4, 5, 6, 7],
+    "regions": ["A", "B", "C", "D"],
+    "keys": [
+      "inventory_onhand_A_0000",
+      "inventory_onhand_B_0000",
+      "inventory_onhand_C_0000",
+      "inventory_onhand_D_0000"
+    ],
+    "expected_edges": [
+      {
+        "from": 4,
+        "to": 5,
+        "edge": "PR_RW",
+        "key": "inventory_onhand_A_0000",
+        "why": "txn 4 returns A_0000 from txn 0; txn 5 is the immediate next write on A_0000 and flips it below threshold"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "edge": "PR_RW",
+        "key": "inventory_onhand_B_0000",
+        "why": "txn 5 returns B_0000 from txn 1; txn 6 is the immediate next write on B_0000 and flips it below threshold"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "edge": "PR_RW",
+        "key": "inventory_onhand_C_0000",
+        "why": "txn 6 returns C_0000 from txn 2; txn 7 is the immediate next write on C_0000 and flips it below threshold"
+      },
+      {
+        "from": 7,
+        "to": 4,
+        "edge": "PR_RW",
+        "key": "inventory_onhand_D_0000",
+        "why": "txn 7 returns D_0000 from txn 3; txn 4 is the immediate next write on D_0000 and flips it below threshold"
+      }
+    ]
+  }
+]

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import com.google.common.graph.ValueGraph;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -93,6 +94,8 @@ public class SERVerifier<KeyType, ValueType> {
 
         if (!accepted) {
             var conflicts = solver.getConflicts();
+            var cycleWitness = buildCycleWitness(graph, constraints);
+            printRejectReason(graph, constraints, conflicts, cycleWitness);
             var txns = new HashSet<Transaction<KeyType, ValueType>>();
 
             conflicts.getLeft().forEach(e -> {
@@ -109,13 +112,264 @@ public class SERVerifier<KeyType, ValueType> {
             });
 
             if (dotOutput) {
+                cycleWitness.ifPresent(cycle -> System.err.print(formatCycleWitness(cycle)));
                 System.out.print(Utils.conflictsToDot(txns, conflicts.getLeft(), conflicts.getRight()));
             } else {
-                System.out.print(Utils.conflictsToLegacy(txns, conflicts.getLeft(), conflicts.getRight()));
+                cycleWitness.ifPresent(cycle -> System.out.print(formatCycleWitness(cycle)));
+                if (cycleWitness.isEmpty() || !conflicts.getLeft().isEmpty() || !conflicts.getRight().isEmpty()) {
+                    System.out.print(Utils.conflictsToLegacy(txns, conflicts.getLeft(), conflicts.getRight()));
+                }
             }
         }
 
         return accepted;
+    }
+
+    private void printRejectReason(
+            KnownGraph<KeyType, ValueType> graph,
+            Collection<SERConstraint<KeyType, ValueType>> constraints,
+            Pair<Collection<Pair<com.google.common.graph.EndpointPair<Transaction<KeyType, ValueType>>, Collection<Edge<KeyType>>>>,
+                    Collection<SERConstraint<KeyType, ValueType>>> conflicts,
+            Optional<List<CycleEdge<KeyType, ValueType>>> cycleWitness) {
+        int knownEdges = graph.getKnownGraphA().edges().size() + graph.getKnownGraphB().edges().size();
+        int conditionalEdges = constraints.stream()
+                .map(c -> c.getEdges1().size() + c.getEdges2().size())
+                .reduce(0, Integer::sum);
+        System.err.println("[SER] Reject reason: strict total AR constraints are UNSAT.");
+        System.err.printf(
+                "[SER] Diagnostic counts: knownEdges=%d, unresolvedWWChoices=%d, conditionalARImplications=%d, predicateReads=%d\n",
+                knownEdges, constraints.size(), conditionalEdges, graph.getPredicateObservations().size());
+        cycleWitness.ifPresentOrElse(
+                cycle -> System.err.printf("[SER] Cycle witness: %d edges explain the contradiction.\n", cycle.size()),
+                () -> System.err.println("[SER] Cycle witness: not available from current mandatory/forced edges."));
+
+        if (conflicts.getLeft().isEmpty() && conflicts.getRight().isEmpty()) {
+            System.err.println("[SER] No compact conflict core was extracted; the contradiction may come from SAT-derived RW or predicate-visibility constraints.");
+        } else {
+            System.err.printf("[SER] Conflict core: knownEdges=%d, wwChoices=%d\n",
+                    conflicts.getLeft().size(), conflicts.getRight().size());
+        }
+    }
+
+    private Optional<List<CycleEdge<KeyType, ValueType>>> buildCycleWitness(
+            KnownGraph<KeyType, ValueType> graph,
+            Collection<SERConstraint<KeyType, ValueType>> constraints) {
+        var labelsByPair = new LinkedHashMap<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>>();
+
+        addKnownCycleEdges(graph.getKnownGraphA(), labelsByPair);
+        addKnownCycleEdges(graph.getKnownGraphB(), labelsByPair);
+        addForcedBottomConstraintEdges(constraints, labelsByPair);
+        addPredicateCycleEdges(graph, labelsByPair);
+
+        return findCycle(labelsByPair);
+    }
+
+    private void addKnownCycleEdges(
+            ValueGraph<Transaction<KeyType, ValueType>, Collection<Edge<KeyType>>> known,
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair) {
+        for (var ep : known.edges()) {
+            var labels = known.edgeValue(ep).orElse(List.of()).stream()
+                    .filter(edge -> edge.getType() != EdgeType.PR_WR && edge.getType() != EdgeType.PR_RW)
+                    .map(edge -> String.format("known %s%s",
+                            edge.getType(),
+                            edge.getKey() == null ? "" : String.format(" key=%s", edge.getKey())))
+                    .collect(Collectors.toList());
+            if (!labels.isEmpty()) {
+                addCycleEdge(labelsByPair, ep.source(), ep.target(), String.join("; ", labels));
+            }
+        }
+    }
+
+    private void addForcedBottomConstraintEdges(
+            Collection<SERConstraint<KeyType, ValueType>> constraints,
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair) {
+        for (var constraint : constraints) {
+            if (isBottomTxn(constraint.getWriteTransaction1()) && !isBottomTxn(constraint.getWriteTransaction2())) {
+                addConstraintSideEdges(labelsByPair, constraint.getEdges1(), constraint.getWriteTransaction2());
+            } else if (!isBottomTxn(constraint.getWriteTransaction1()) && isBottomTxn(constraint.getWriteTransaction2())) {
+                addConstraintSideEdges(labelsByPair, constraint.getEdges2(), constraint.getWriteTransaction1());
+            }
+        }
+    }
+
+    private void addPredicateCycleEdges(
+            KnownGraph<KeyType, ValueType> graph,
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair) {
+        var writesByKey = buildWritesByKey(graph);
+        for (var observation : graph.getPredicateObservations()) {
+            var predicateRead = observation.getPredicateReadEvent();
+            if (predicateRead.getPredicate() == null) {
+                continue;
+            }
+
+            var resultSourceByKey = observation.getTupleSources().stream()
+                    .collect(Collectors.toMap(
+                            KnownGraph.PredicateTupleSource::getKey,
+                            KnownGraph.PredicateTupleSource::getSourceWrite));
+
+            for (var resultEntry : resultSourceByKey.entrySet()) {
+                var key = resultEntry.getKey();
+                var resultSource = resultEntry.getValue();
+                if (!matchesPredicate(resultSource, predicateRead)) {
+                    continue;
+                }
+
+                for (var write : writesByKey.getOrDefault(key, List.of())) {
+                    if (write == resultSource || write.getTxn().equals(observation.getTxn())) {
+                        continue;
+                    }
+                    if (matchesPredicate(write, predicateRead)) {
+                        continue;
+                    }
+                    addCycleEdge(labelsByPair, observation.getTxn(), write.getTxn(),
+                            String.format(
+                                    "PR_RW key=%s (predicate read observed matching value %s from %s; %s writes non-matching value %s)",
+                                    key,
+                                    resultSource.getEvent().getValue(),
+                                    resultSource.getTxn(),
+                                    write.getTxn(),
+                                    write.getEvent().getValue()));
+                }
+            }
+
+            for (var entry : writesByKey.entrySet()) {
+                var key = entry.getKey();
+                if (resultSourceByKey.containsKey(key)) {
+                    continue;
+                }
+                for (var write : entry.getValue()) {
+                    if (write.getTxn().equals(observation.getTxn())) {
+                        continue;
+                    }
+                    if (!matchesPredicate(write, predicateRead)) {
+                        continue;
+                    }
+                    addCycleEdge(labelsByPair, observation.getTxn(), write.getTxn(),
+                            String.format(
+                                    "PR_RW key=%s (predicate read returned no tuple for this key; %s writes matching value %s)",
+                                    key, write.getTxn(), write.getEvent().getValue()));
+                }
+            }
+        }
+    }
+
+    private void addConstraintSideEdges(
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair,
+            Collection<SEREdge<KeyType, ValueType>> edges,
+            Transaction<KeyType, ValueType> realWriter) {
+        if (edges == null) {
+            return;
+        }
+        for (var edge : edges) {
+            addCycleEdge(labelsByPair, edge.getFrom(), edge.getTo(),
+                    String.format("%s key=%s (forced by T_bottom < %s)",
+                            edge.getType(), edge.getKey(), realWriter));
+        }
+    }
+
+    private void addCycleEdge(
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair,
+            Transaction<KeyType, ValueType> from,
+            Transaction<KeyType, ValueType> to,
+            String label) {
+        labelsByPair.computeIfAbsent(Pair.of(from, to), ignored -> new ArrayList<>()).add(label);
+    }
+
+    private Optional<List<CycleEdge<KeyType, ValueType>>> findCycle(
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair) {
+        var adjacency = new LinkedHashMap<Transaction<KeyType, ValueType>, LinkedHashSet<Transaction<KeyType, ValueType>>>();
+        for (var pair : labelsByPair.keySet()) {
+            adjacency.computeIfAbsent(pair.getLeft(), ignored -> new LinkedHashSet<>()).add(pair.getRight());
+            adjacency.computeIfAbsent(pair.getRight(), ignored -> new LinkedHashSet<>());
+        }
+
+        var color = new HashMap<Transaction<KeyType, ValueType>, Integer>();
+        var stack = new ArrayList<Transaction<KeyType, ValueType>>();
+        var stackIndex = new HashMap<Transaction<KeyType, ValueType>, Integer>();
+        for (var txn : adjacency.keySet()) {
+            if (color.getOrDefault(txn, 0) != 0) {
+                continue;
+            }
+            var cycle = dfsCycle(txn, adjacency, labelsByPair, color, stack, stackIndex);
+            if (cycle.isPresent()) {
+                return cycle;
+            }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<List<CycleEdge<KeyType, ValueType>>> dfsCycle(
+            Transaction<KeyType, ValueType> node,
+            Map<Transaction<KeyType, ValueType>, LinkedHashSet<Transaction<KeyType, ValueType>>> adjacency,
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair,
+            Map<Transaction<KeyType, ValueType>, Integer> color,
+            List<Transaction<KeyType, ValueType>> stack,
+            Map<Transaction<KeyType, ValueType>, Integer> stackIndex) {
+        color.put(node, 1);
+        stackIndex.put(node, stack.size());
+        stack.add(node);
+
+        for (var succ : adjacency.getOrDefault(node, new LinkedHashSet<>())) {
+            int succColor = color.getOrDefault(succ, 0);
+            if (succColor == 0) {
+                var cycle = dfsCycle(succ, adjacency, labelsByPair, color, stack, stackIndex);
+                if (cycle.isPresent()) {
+                    return cycle;
+                }
+            } else if (succColor == 1) {
+                var cycleNodes = new ArrayList<>(stack.subList(stackIndex.get(succ), stack.size()));
+                cycleNodes.add(succ);
+                return Optional.of(cycleEdgesFromNodes(cycleNodes, labelsByPair));
+            }
+        }
+
+        stack.remove(stack.size() - 1);
+        stackIndex.remove(node);
+        color.put(node, 2);
+        return Optional.empty();
+    }
+
+    private List<CycleEdge<KeyType, ValueType>> cycleEdgesFromNodes(
+            List<Transaction<KeyType, ValueType>> cycleNodes,
+            Map<Pair<Transaction<KeyType, ValueType>, Transaction<KeyType, ValueType>>, List<String>> labelsByPair) {
+        var result = new ArrayList<CycleEdge<KeyType, ValueType>>();
+        for (int i = 0; i + 1 < cycleNodes.size(); i++) {
+            var from = cycleNodes.get(i);
+            var to = cycleNodes.get(i + 1);
+            var labels = labelsByPair.getOrDefault(Pair.of(from, to), List.of("unknown edge"));
+            result.add(new CycleEdge<>(from, to, String.join("; ", labels)));
+        }
+        return result;
+    }
+
+    private String formatCycleWitness(List<CycleEdge<KeyType, ValueType>> cycle) {
+        var builder = new StringBuilder("Cycle witness:\n");
+        for (int i = 0; i < cycle.size(); i++) {
+            var edge = cycle.get(i);
+            builder.append(String.format("  %d. %s -> %s: %s\n",
+                    i + 1, edge.from, edge.to, edge.label));
+        }
+        return builder.toString();
+    }
+
+    private static boolean isBottomTxn(Transaction<?, ?> txn) {
+        return txn.getId() == -1L
+                && txn.getSession() != null
+                && txn.getSession().getId() == -1L;
+    }
+
+    private static class CycleEdge<KeyType, ValueType> {
+        private final Transaction<KeyType, ValueType> from;
+        private final Transaction<KeyType, ValueType> to;
+        private final String label;
+
+        private CycleEdge(Transaction<KeyType, ValueType> from,
+                          Transaction<KeyType, ValueType> to,
+                          String label) {
+            this.from = from;
+            this.to = to;
+            this.label = label;
+        }
     }
     /* ================================================================
      * Constraint generation (WW / ordinary RW) — unchanged from the

@@ -11,9 +11,7 @@ import history.HistoryLoader;
 import history.HistoryParser;
 import history.HistoryTransformer;
 import history.Transaction;
-import history.loaders.CobraHistoryLoader;
 import history.loaders.DBCopHistoryLoader;
-import history.loaders.ElleHistoryLoader;
 import history.loaders.PredicateHistoryLoader;
 import history.loaders.TextHistoryLoader;
 import history.transformers.Identity;
@@ -48,7 +46,7 @@ public class Main implements Callable<Integer> {
 @Command(name = "audit", mixinStandardHelpOptions = true, description = "Verify a history")
 class Audit implements Callable<Integer> {
     @Option(names = { "-t", "--type" }, description = "history type: ${COMPLETION-CANDIDATES}")
-    private final HistoryType type = HistoryType.COBRA;
+    private final HistoryType type = HistoryType.PRHIST;
 
     @Option(names = { "--no-pruning" }, description = "disable pruning")
     private final Boolean noPruning = false;
@@ -100,7 +98,7 @@ class Audit implements Callable<Integer> {
 @Command(name = "convert", mixinStandardHelpOptions = true, description = "Convert a history between different formats")
 class Convert implements Callable<Integer> {
     @Option(names = { "-f", "--from" }, description = "input history type: ${COMPLETION-CANDIDATES}")
-    private final HistoryType inType = HistoryType.COBRA;
+    private final HistoryType inType = HistoryType.PRHIST;
 
     @Option(names = { "-o", "--output" }, description = "input history type: ${COMPLETION-CANDIDATES}")
     private final HistoryType outType = HistoryType.DBCOP;
@@ -139,7 +137,7 @@ class Convert implements Callable<Integer> {
 @Command(name = "stat", mixinStandardHelpOptions = true, description = "Print some statistics of a history")
 class Stat implements Callable<Integer> {
     @Option(names = { "-t", "--type" }, description = "history type: ${COMPLETION-CANDIDATES}")
-    private final HistoryType type = HistoryType.COBRA;
+    private final HistoryType type = HistoryType.PRHIST;
 
     @Parameters(description = "history path")
     private Path path;
@@ -208,7 +206,7 @@ class Stat implements Callable<Integer> {
 @Command(name = "dump", mixinStandardHelpOptions = true, description = "Print a history to stdout")
 class Dump implements Callable<Integer> {
     @Option(names = { "-t", "--type" }, description = "history type: ${COMPLETION-CANDIDATES}")
-    private final HistoryType type = HistoryType.COBRA;
+    private final HistoryType type = HistoryType.PRHIST;
 
     @Parameters(description = "history path")
     private Path path;
@@ -238,14 +236,10 @@ class Dump implements Callable<Integer> {
 class Utils {
     static HistoryLoader<?, ?> getLoader(HistoryType type, Path path) {
         switch (type) {
-        case COBRA:
-            return new CobraHistoryLoader(path);
         case DBCOP:
             return new DBCopHistoryLoader(path);
         case TEXT:
             return new TextHistoryLoader(path);
-        case ELLE:
-            return new ElleHistoryLoader(path);
         case PRHIST:
             return new PredicateHistoryLoader(path);
         default:
@@ -279,7 +273,7 @@ class Utils {
 }
 
 enum HistoryType {
-    COBRA, DBCOP, TEXT, ELLE, PRHIST
+    DBCOP, TEXT, PRHIST
 }
 
 enum HistoryTransformation {

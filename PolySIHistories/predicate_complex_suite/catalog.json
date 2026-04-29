@@ -1,0 +1,99 @@
+{
+  "accept": [
+    {
+      "profile": "inventory_mutable_serial_12_80_160_0.62_hotspot",
+      "path": "ACCEPT\\inventory_mutable_serial_12_80_160_0.62_hotspot\\hist-00000",
+      "expected_verdict": "ACCEPT",
+      "counts": {
+        "sessions": 12,
+        "transactions": 160,
+        "writes": 552,
+        "point_reads": 320,
+        "predicate_transactions": 105,
+        "predicate_result_tuples": 4159,
+        "approx_session_order_edges": 148,
+        "approx_input_dependency_edges": 4627
+      }
+    },
+    {
+      "profile": "order_mutable_serial_10_70_140_0.58_hotspot",
+      "path": "ACCEPT\\order_mutable_serial_10_70_140_0.58_hotspot\\hist-00000",
+      "expected_verdict": "ACCEPT",
+      "counts": {
+        "sessions": 10,
+        "transactions": 140,
+        "writes": 486,
+        "point_reads": 280,
+        "predicate_transactions": 83,
+        "predicate_result_tuples": 3993,
+        "approx_session_order_edges": 130,
+        "approx_input_dependency_edges": 4403
+      }
+    },
+    {
+      "profile": "search_mutable_serial_10_75_150_0.60_hotspot",
+      "path": "ACCEPT\\search_mutable_serial_10_75_150_0.60_hotspot\\hist-00000",
+      "expected_verdict": "ACCEPT",
+      "counts": {
+        "sessions": 10,
+        "transactions": 150,
+        "writes": 528,
+        "point_reads": 300,
+        "predicate_transactions": 88,
+        "predicate_result_tuples": 2791,
+        "approx_session_order_edges": 140,
+        "approx_input_dependency_edges": 3231
+      }
+    }
+  ],
+  "reject": [
+    {
+      "profile": "inventory_pure_prrw_cycle_12_90_150",
+      "path": "REJECT\\inventory_pure_prrw_cycle_12_90_150\\hist-00000",
+      "expected_verdict": "REJECT",
+      "counts": {
+        "sessions": 12,
+        "transactions": 150,
+        "writes": 150,
+        "point_reads": 0,
+        "predicate_transactions": 150,
+        "predicate_result_tuples": 150,
+        "approx_session_order_edges": 138,
+        "approx_input_dependency_edges": 288
+      },
+      "conflict_examples": "REJECT\\inventory_pure_prrw_cycle_12_90_150\\hist-00000\\conflicts.json"
+    },
+    {
+      "profile": "order_pure_prrw_cycle_10_90_150",
+      "path": "REJECT\\order_pure_prrw_cycle_10_90_150\\hist-00000",
+      "expected_verdict": "REJECT",
+      "counts": {
+        "sessions": 10,
+        "transactions": 150,
+        "writes": 150,
+        "point_reads": 0,
+        "predicate_transactions": 150,
+        "predicate_result_tuples": 150,
+        "approx_session_order_edges": 140,
+        "approx_input_dependency_edges": 290
+      },
+      "conflict_examples": "REJECT\\order_pure_prrw_cycle_10_90_150\\hist-00000\\conflicts.json"
+    },
+    {
+      "profile": "search_pure_prrw_cycle_10_90_150",
+      "path": "REJECT\\search_pure_prrw_cycle_10_90_150\\hist-00000",
+      "expected_verdict": "REJECT",
+      "counts": {
+        "sessions": 10,
+        "transactions": 150,
+        "writes": 150,
+        "point_reads": 0,
+        "predicate_transactions": 150,
+        "predicate_result_tuples": 150,
+        "approx_session_order_edges": 140,
+        "approx_input_dependency_edges": 290
+      },
+      "conflict_examples": "REJECT\\search_pure_prrw_cycle_10_90_150\\hist-00000\\conflicts.json"
+    }
+  ]
+}

@@ -303,6 +303,12 @@ class Utils {
             Collection<SERConstraint<KeyType, ValueType>> constraints) {
         var builder = new StringBuilder();
 
+        if (edges.isEmpty() && constraints.isEmpty()) {
+            builder.append("Reject reason: serializability violation; no compact conflict core was extracted.\n");
+            builder.append("The contradiction may be caused by SAT-derived RW or predicate-visibility constraints.\n");
+            return builder.toString();
+        }
+
         edges.forEach(p -> builder.append(String.format("Edge: %s\n", p)));
         constraints.forEach(c -> builder.append(String.format("Constraint: %s\n", c)));
         builder.append(String.format("Related transactions:\n"));

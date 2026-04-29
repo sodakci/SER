@@ -1,0 +1,32 @@
+{
+  "workload": "search_pure_prrw_cycle_10_90_150",
+  "expected_verdict": "REJECT",
+  "rejection_witness": "predicate_boundary_cycle",
+  "profile": {
+    "sessions": 10,
+    "entities": 90,
+    "transactions": 150,
+    "predicate_ratio": 1.0,
+    "seed": 52013
+  },
+  "counts": {
+    "sessions": 10,
+    "transactions": 150,
+    "writes": 150,
+    "point_reads": 0,
+    "predicate_transactions": 150,
+    "predicate_result_tuples": 150,
+    "approx_session_order_edges": 140,
+    "approx_input_dependency_edges": 290
+  },
+  "transaction_kinds": {
+    "search.reject_prrw_cycle_t0": 50,
+    "search.reject_prrw_cycle_t1": 50,
+    "search.reject_prrw_cycle_t2": 50
+  },
+  "notes": [
+    "Every rejecting motif is a pure predicate-boundary cycle.",
+    "No point read is used to close the cycle.",
+    "The expected contradiction is T0 -> T1 -> T2 -> T0, all by PR_RW."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "workload": "search_mutable_serial_10_75_150_0.60_hotspot",
+  "expected_verdict": "ACCEPT",
+  "serial_witness": "txn_id_ascending",
+  "profile": {
+    "sessions": 10,
+    "entities": 75,
+    "transactions": 150,
+    "predicate_ratio": 0.6,
+    "seed": 42013
+  },
+  "counts": {
+    "sessions": 10,
+    "transactions": 150,
+    "writes": 528,
+    "point_reads": 300,
+    "predicate_transactions": 88,
+    "predicate_result_tuples": 2791,
+    "approx_session_order_edges": 140,
+    "approx_input_dependency_edges": 3231
+  },
+  "transaction_kinds": {
+    "search.accept_predicate_mutation": 88,
+    "search.accept_mutation": 62
+  },
+  "notes": [
+    "Every point read reads the latest version in ascending txn id order.",
+    "Every predicate read returns the complete matching set for the current serial prefix.",
+    "Domain writes happen after the predicate read inside the same transaction."
+  ]
+}
